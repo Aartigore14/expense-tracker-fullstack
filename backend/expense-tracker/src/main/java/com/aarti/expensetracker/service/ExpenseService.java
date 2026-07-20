@@ -3,7 +3,7 @@ package com.aarti.expensetracker.service;
 import com.aarti.expensetracker.entity.Expense;
 import com.aarti.expensetracker.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
-
+import com.aarti.expensetracker.exception.ExpenseNotFoundException;
 import java.util.List;
 
 @Service
@@ -18,12 +18,12 @@ public class ExpenseService {
     public List<Expense> getAllExpenses() {
         return expenseRepository.findAll();
     }
-    public Expense saveExpense(Expense expense){
+    public Expense createExpense(Expense expense){
         return expenseRepository.save(expense);
     }
     public Expense updateExpense(Long id, Expense expense) {
         Expense existingExpense = expenseRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Expense not found"));
+                .orElseThrow(() -> new ExpenseNotFoundException("Expense with ID "+ id + " not found"));
 
         existingExpense.setTitle(expense.getTitle());
         existingExpense.setAmount(expense.getAmount());
