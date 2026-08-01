@@ -2,6 +2,7 @@ package com.aarti.expensetracker.controller;
 
 import com.aarti.expensetracker.dto.RegisterRequest;
 import com.aarti.expensetracker.service.AuthService;
+import com.aarti.expensetracker.dto.LoginRequest;
 import jakarta.persistence.PostRemove;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,4 +21,11 @@ public class AuthController {
     public ResponseEntity<String> register(@RequestBody RegisterRequest request){
         return ResponseEntity.ok(authService.register(request));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginRequest request){
+        return ResponseEntity.ok(authService.login(request));
+    }
 }
+
+
