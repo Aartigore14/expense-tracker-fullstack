@@ -14,13 +14,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private  final UserRepository userRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    public String register(RegisterRequest request){
-        if (userRepository.existsByEmail(request.getEmail())){
+    public String register(RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email is already exists");
         }
         User user = new User();
@@ -30,11 +30,12 @@ public class AuthService {
         userRepository.save(user);
         return "User Registered Successfully";
     }
-    public String login(LoginRequest request){
+
+    public String login(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getEmail(),
-                request.getPassword()
-        )
+                        request.getEmail(),
+                        request.getPassword()
+                )
         );
         return jwtUtil.generateToken(request.getEmail());
     }
