@@ -7,6 +7,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.web.WebProperties;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -26,4 +31,7 @@ public class User {
     @NotBlank
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+    private List<Expense> expenses = new ArrayList<>();
 }

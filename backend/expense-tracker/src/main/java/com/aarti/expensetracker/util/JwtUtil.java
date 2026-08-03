@@ -30,6 +30,7 @@ public class JwtUtil {
         return extractAllClaims(token).getSubject();
     }
 
+
     public boolean validateToken(String token, String email){
         return extractUsername(token).equals(email);
     }

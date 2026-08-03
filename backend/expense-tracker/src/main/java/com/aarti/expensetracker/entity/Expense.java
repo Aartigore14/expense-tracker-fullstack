@@ -38,4 +38,8 @@ public class Expense {
 
     @NotBlank(message = "Category is required")
     private String category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }
