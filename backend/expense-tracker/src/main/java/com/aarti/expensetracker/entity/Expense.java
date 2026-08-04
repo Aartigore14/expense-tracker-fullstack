@@ -2,7 +2,7 @@ package com.aarti.expensetracker.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,5 +41,6 @@ public class Expense {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private User user;
 }
