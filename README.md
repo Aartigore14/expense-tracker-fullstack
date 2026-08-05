@@ -301,7 +301,7 @@ npm run dev
 | User Registration and Login API | ✅ Complete |
 | JWT token generation and validation | ✅ Complete |
 | Spring Security 6 filter chain | ✅ Complete |
-| Expense CRUD REST API | 🔄 In Progress |
+| Expense CRUD REST API | ✅ Complete |
 | Category management | 🔄 In Progress |
 | React + Vite project setup | ✅ Complete |
 | Login and Register UI | 🔄 In Progress |
@@ -326,7 +326,7 @@ npm run dev
 
 **Aarti Gore**
 - 🎓 B.E. E&TC Student — SPPU, Pune (Batch 2027)
-- 💼 [LinkedIn](https://linkedin.com/in/aarti-gore-07b2202aa)
+- 💼 [LinkedIn](https://linkedin.com/in/gore-aarti)
 - 🐙 [GitHub](https://github.com/Aartigore14)
 - 💻 [LeetCode](https://leetcode.com/aartigore)
 - 📧 aartigore2005@gmail.com
