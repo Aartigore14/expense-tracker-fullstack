@@ -45,7 +45,11 @@ public class ExpenseService {
         return expenseRepository.save(existingExpense);
     }
     public List<Expense> getExpenseByCategory(String category){
-        return expenseRepository.findByCategory(category);
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+        return expenseRepository.findByCategoryAndUserEmail(category, email);
     }
     public void deleteExpense(Long id){
         expenseRepository.deleteById(id);
