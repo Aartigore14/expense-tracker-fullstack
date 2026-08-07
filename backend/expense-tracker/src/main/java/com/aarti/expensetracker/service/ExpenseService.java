@@ -51,6 +51,14 @@ public class ExpenseService {
                 .getName();
         return expenseRepository.findByCategoryAndUserEmail(category, email);
     }
+
+    public Double getTotalExpenses(){
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+        return expenseRepository.getTotalExpensesByUser(email);
+    }
     public void deleteExpense(Long id){
         expenseRepository.deleteById(id);
     }
