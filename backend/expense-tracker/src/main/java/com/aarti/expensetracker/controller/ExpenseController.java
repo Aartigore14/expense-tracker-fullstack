@@ -45,6 +45,11 @@ public class ExpenseController {
     public List<Expense> getExpenseByCategory(@PathVariable String category){
         return expenseService.getExpenseByCategory(category);
     }
+
+    @GetMapping("/total")
+    public Double getTotalExpenses(){
+        return expenseService.getTotalExpenses();
+    }
     @DeleteMapping("/{id}")
     public void deleteExpense(@PathVariable Long id){
         expenseService.deleteExpense(id);
