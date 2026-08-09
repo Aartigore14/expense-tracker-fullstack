@@ -1,6 +1,7 @@
 package com.aarti.expensetracker.service;
 
 import com.aarti.expensetracker.dto.CategorySummaryDTO;
+import com.aarti.expensetracker.dto.MonthlySummaryDTO;
 import com.aarti.expensetracker.entity.Expense;
 import com.aarti.expensetracker.entity.User;
 import com.aarti.expensetracker.repository.ExpenseRepository;
@@ -67,6 +68,16 @@ public class ExpenseService {
                 .getAuthentication()
                 .getName();
         return expenseRepository.getCategorySummary(email);
+    }
+
+    public List<MonthlySummaryDTO> getMonthlySummary(){
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+        List<Object[]> results = expenseRepository.getMonthlySummary(email);
+        return results.stream()
+                .map(row -> new MonthlySummaryDTO((String) row[0],((Number)row[1]).doubleValue())).toList();
     }
     public void deleteExpense(Long id){
         expenseRepository.deleteById(id);

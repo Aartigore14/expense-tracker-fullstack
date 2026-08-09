@@ -5,6 +5,7 @@ import com.aarti.expensetracker.entity.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import com.aarti.expensetracker.dto.MonthlySummaryDTO;
 
 import java.util.List;
 
@@ -24,4 +25,15 @@ WHERE e.user.email = :email
 GROUP BY e.category
 """)
     List<CategorySummaryDTO> getCategorySummary(@Param("email") String email);
+
+    @Query(value = """
+        SELECT DATE_FORMAT(e.date, '%Y-%m') AS month,
+               SUM(e.amount) AS total
+        FROM expenses e
+        JOIN users u ON e.user_id = u.id
+        WHERE u.email = :email
+        GROUP BY DATE_FORMAT(e.date, '%Y-%m')
+        ORDER BY DATE_FORMAT(e.date, '%Y-%m')
+        """, nativeQuery = true)
+    List<Object[]> getMonthlySummary(@Param("email") String email);
 }
