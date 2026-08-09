@@ -1,6 +1,7 @@
 package com.aarti.expensetracker.controller;
 
 import com.aarti.expensetracker.dto.CategorySummaryDTO;
+import com.aarti.expensetracker.dto.MonthlySummaryDTO;
 import com.aarti.expensetracker.entity.Expense;
 import com.aarti.expensetracker.service.ExpenseService;
 import jakarta.validation.Valid;
@@ -54,6 +55,11 @@ public class ExpenseController {
     @GetMapping("/summary/category")
     public List<CategorySummaryDTO> getCategorySummary(){
         return expenseService.getCategorySummary();
+    }
+
+    @GetMapping("summary/monthly")
+    public List<MonthlySummaryDTO> getMonthlySummary(){
+        return expenseService.getMonthlySummary();
     }
     @DeleteMapping("/{id}")
     public void deleteExpense(@PathVariable Long id){
