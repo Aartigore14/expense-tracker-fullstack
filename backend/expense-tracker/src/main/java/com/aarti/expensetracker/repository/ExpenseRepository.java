@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import com.aarti.expensetracker.dto.MonthlySummaryDTO;
+import com.aarti.expensetracker.dto.ExpenseSummaryDTO;
 
 import java.util.List;
 
@@ -36,4 +37,14 @@ GROUP BY e.category
         ORDER BY DATE_FORMAT(e.date, '%Y-%m')
         """, nativeQuery = true)
     List<Object[]> getMonthlySummary(@Param("email") String email);
+
+    @Query("""
+    SELECT new com.aarti.expensetracker.dto.ExpenseSummaryDTO(
+        COALESCE(SUM(e.amount), 0.0),
+        COUNT(e)
+    )
+    FROM Expense e
+    WHERE e.user.email = :email
+""")
+    ExpenseSummaryDTO getExpenseSummary(@Param("email") String email);
 }
