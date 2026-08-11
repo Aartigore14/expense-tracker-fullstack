@@ -304,7 +304,7 @@ npm run dev
 | Expense CRUD REST API | ✅ Complete |
 | Category management | 🔄 In Progress |
 | React + Vite project setup | ✅ Complete |
-| Login and Register UI | 🔄 In Progress |
+| Login and Register UI | ✅ Complete |
 | Dashboard with charts | 🔜 Upcoming |
 | Income vs Expense tracking | 🔜 Upcoming |
 | Responsive UI (mobile-friendly) | 🔜 Upcoming |
