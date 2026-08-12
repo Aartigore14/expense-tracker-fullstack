@@ -1,7 +1,5 @@
 import { createContext, useContext, useState } from "react";
-
 const AuthContext = createContext();
-
 export const AuthProvider = ({ children }) => {
 
     const [token, setToken] = useState(
@@ -17,7 +15,6 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem("token");
         setToken(null);
     };
-
     const isAuthenticated = !!token;
 
     return (
@@ -33,7 +30,6 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-
 export const useAuth = () => {
     return useContext(AuthContext);
 };
