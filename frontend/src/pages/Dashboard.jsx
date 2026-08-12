@@ -7,6 +7,7 @@ function Dashboard() {
     const [expenses, setExpenses] = useState([]);
     const [total, setTotal] = useState(0);
     const [editingExpense, setEditingExpense] = useState(null);
+    const [searchTerm, setSearchTerm]= useState("");
 
     useEffect(() => {
         fetchDashboardData();
@@ -41,7 +42,7 @@ function Dashboard() {
             setEditingExpense({...expense});
         }
     };
-    
+
     const handleUpdate = async (e)=>{
         e.preventDefault();
         try{
@@ -53,6 +54,9 @@ function Dashboard() {
         }
     };
 
+    const filteredExpenses = expenses.filter((expense)=> 
+        expense.title.toLowerCase().includes(searchTerm.toLowerCase()));
+
     return (
         <div>
             <h1>Expense Tracker Dashboard</h1>
@@ -60,6 +64,10 @@ function Dashboard() {
             <p>Welcome to your dashboard</p>
 
             <h2>Total Expenses: ₹{total}</h2>
+
+            <h2>Search Expenses</h2>
+            <input type="text" placeholder="Search by title..."
+             value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)}/>
 
             <h2>Recent Expenses</h2>
             {editingExpense && (
@@ -139,7 +147,7 @@ function Dashboard() {
 
     </form>
 )}
-            {expenses.map((expense) => (
+            {filteredExpenses.map((expense) => (
                 <div key={expense.id}>
                     <span>
                         {expense.title} - ₹{expense.amount}
