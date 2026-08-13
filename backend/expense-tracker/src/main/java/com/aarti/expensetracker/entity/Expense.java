@@ -1,5 +1,4 @@
 package com.aarti.expensetracker.entity;
-
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,14 +15,11 @@ import jakarta.validation.constraints.Positive;
 @Entity
 @Table(name = "expenses")
 public class Expense {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-
-
     private LocalDate date;
 
     private String description;

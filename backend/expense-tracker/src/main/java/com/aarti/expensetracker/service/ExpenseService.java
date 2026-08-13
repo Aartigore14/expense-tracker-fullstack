@@ -24,7 +24,11 @@ public class ExpenseService {
     }
 
     public List<Expense> getAllExpenses() {
-        return expenseRepository.findAll();
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+        return expenseRepository.findByUser_Email(email);
     }
     public Expense createExpense(Expense expense){
     String email = SecurityContextHolder
