@@ -11,6 +11,8 @@ import com.aarti.expensetracker.dto.ExpenseSummaryDTO;
 import java.util.List;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
+
+    List<Expense> findByUser_Email(String email);
     List<Expense> findByCategoryAndUserEmail(String category, String email);
 
     @Query("SELECT COALESCE(SUM(e.amount),0) FROM Expense e WHERE e.user.email=:email")

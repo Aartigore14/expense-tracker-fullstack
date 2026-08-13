@@ -29,8 +29,9 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
+        System.out.println("JWT FILTERED CALLED:"+request.getRequestURI());
         String path = request.getServletPath();
-        if (path.startsWith("/auth")){
+        if (path.startsWith("/api/auth")){
             filterChain.doFilter(request,response);
             return;
         }
@@ -43,13 +44,16 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
         }
         String token = authHeader.substring(7);
         String email = jwtUtil.extractUsername(token);
-
+        System.out.println("JWT EMAIL: "+email);
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+        System.out.println("USER FOUND: "+userDetails.getUsername());
         if (jwtUtil.validateToken(token, userDetails.getUsername())){
+            System.out.println("JWT VALID");
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
                     null,userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            System.out.println("AUTHENTICATION SET"+SecurityContextHolder.getContext().getAuthentication().getName());
         }
         filterChain.doFilter(request, response);
     }
