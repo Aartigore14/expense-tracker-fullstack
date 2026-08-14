@@ -8,7 +8,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const {login} = useAuth();
+  const { login } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -26,9 +26,9 @@ function Login() {
       navigate("/dashboard");
 
     } catch (error) {
-      console.error("STATUS:",error.response?.status);
-      console.error("DATA:",error.response?.data);
-      console.error("ERROR:",error.message);
+      console.error("STATUS:", error.response?.status);
+      console.error("DATA:", error.response?.data);
+      console.error("ERROR:", error.message);
 
       if (error.response?.status === 401) {
         setMessage("Invalid email or password");
@@ -39,30 +39,48 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className="login-page">
 
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <div className="login-card">
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+            <h1>Welcome Back 👋</h1>
 
-        <button type="submit">Login</button>
-      </form>
+            <p className="login-subtitle">
+                Login to your Expense Tracker
+            </p>
 
-      {message && <p>{message}</p>}
+            <form className="login-form" onSubmit={handleLogin}>
+
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <button className="login-btn" type="submit">
+                    Login
+                </button>
+
+            </form>
+
+            {message && (
+                <p className="login-message">
+                    {message}
+                </p>
+            )}
+
+        </div>
+
     </div>
-  );
+);
 }
 
 export default Login;
