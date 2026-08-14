@@ -50,13 +50,20 @@ function AddExpense() {
     };
 
     return (
-        <div>
-            <h1>Add Expense</h1>
+    <div className="form-page">
 
-            <form onSubmit={handleSubmit}>
+        <div className="form-card">
 
-                <div>
-                    <label>Date:</label>
+            <h1>Add Expense 💰</h1>
+
+            <p className="form-subtitle">
+                Record a new expense
+            </p>
+
+            <form className="expense-form" onSubmit={handleSubmit}>
+
+                <div className="form-group">
+                    <label>Date</label>
                     <input
                         type="date"
                         name="date"
@@ -66,8 +73,8 @@ function AddExpense() {
                     />
                 </div>
 
-                <div>
-                    <label>Title:</label>
+                <div className="form-group">
+                    <label>Title</label>
                     <input
                         type="text"
                         name="title"
@@ -78,8 +85,8 @@ function AddExpense() {
                     />
                 </div>
 
-                <div>
-                    <label>Description:</label>
+                <div className="form-group">
+                    <label>Description</label>
                     <input
                         type="text"
                         name="description"
@@ -89,8 +96,8 @@ function AddExpense() {
                     />
                 </div>
 
-                <div>
-                    <label>Amount:</label>
+                <div className="form-group">
+                    <label>Amount</label>
                     <input
                         type="number"
                         name="amount"
@@ -103,8 +110,8 @@ function AddExpense() {
                     />
                 </div>
 
-                <div>
-                    <label>Category:</label>
+                <div className="form-group">
+                    <label>Category</label>
                     <input
                         type="text"
                         name="category"
@@ -115,15 +122,30 @@ function AddExpense() {
                     />
                 </div>
 
-                <button type="submit">
+                <button className="add-expense-btn" type="submit">
                     Add Expense
+                </button>
+
+                <button
+                    className="cancel-btn"
+                    type="button"
+                    onClick={() => navigate("/dashboard")}
+                >
+                    Cancel
                 </button>
 
             </form>
 
-            {message && <p>{message}</p>}
+            {message && (
+                <p className="form-message">
+                    {message}
+                </p>
+            )}
+
         </div>
-    );
+
+    </div>
+);
 }
 
 export default AddExpense;

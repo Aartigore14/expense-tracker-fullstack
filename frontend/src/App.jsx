@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import AddExpense from "./pages/AddExpense";
-import { useAuth } from "./context/AuthContext";
-
+import ExpenseAnalytics from "./pages/ExpenseAnalytics";
+import EditExpense from "./pages/EditExpense";
+import ProtectedRoute from "./ProtectedRoute";
+import "./App.css";
 function App() {
-
-  const { isAuthenticated } = useAuth();
 
   return (
     <BrowserRouter>
@@ -15,32 +16,52 @@ function App() {
         {/* Login */}
         <Route
           path="/login"
-          element={
-            isAuthenticated
-              ? <Navigate to="/dashboard" replace />
-              : <Login />
-          }
+          element={ <Login/> }
         />
+
+        {/* Register */}
+        <Route path="/register"
+        element={<Register/>} />
 
         {/* Protected Dashboard */}
         <Route
           path="/dashboard"
           element={
-            isAuthenticated
-              ? <Dashboard />
-              : <Navigate to="/login" replace />
+            <ProtectedRoute>
+              <Dashboard/>
+            </ProtectedRoute>
           }
         />
         {/*Protected Add Expense*/}
         <Route 
         path="/add-expense"
-        element={
-          isAuthenticated
-          ?<AddExpense/>
-          :<Navigate to="/login" replace/>
-        }
+         element={
+            <ProtectedRoute>
+              <AddExpense/>
+            </ProtectedRoute>
+          }
         />
-        
+
+         {/*Protected Edit Expense*/}
+        <Route 
+        path="/edit-expense/:id"
+        element={
+            <ProtectedRoute>
+              <EditExpense/>
+            </ProtectedRoute>
+          }
+        />
+
+        {/*Prtected Analytics*/}
+        <Route 
+        path="/analytics"
+        element={
+            <ProtectedRoute>
+              <ExpenseAnalytics/>
+            </ProtectedRoute>
+          }
+        />
+
       
 
         {/* Default route */}

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import { getExpenses, deleteExpense, updateExpense } from "../services/expenseService";
+import { getExpenses, deleteExpense } from "../services/expenseService";
 
 function Dashboard() {
-
+    const navigate = useNavigate();
     const [expenses, setExpenses] = useState([]);
     const [total, setTotal] = useState(0);
-    const [editingExpense, setEditingExpense] = useState(null);
 
     useEffect(() => {
         fetchDashboardData();
@@ -24,133 +24,132 @@ function Dashboard() {
             console.error("Error fetching dashboard data:", error);
         }
     };
-
-    const handleDelete = async(id)=>{
+    const handleDelete = async (id) =>{
         try{
             await deleteExpense(id);
             const data = await getExpenses();
             setExpenses(data);
-        } catch (error){
-            console.error("Error deleting expense:",error);
+            await fetchDashboardData();
+        } catch(error){
+            console.error("Error deleting expense:",error)
         }
     };
 
     const handleEdit = (id) =>{
-        const expense = expenses.find((expense) => expense.id === id);
-        if(expense){
-            setEditingExpense({...expense});
-        }
+        navigate(`/edit-expense/${id}`);
     };
+
     
-    const handleUpdate = async (e)=>{
-        e.preventDefault();
-        try{
-            await updateExpense(editingExpense.id, editingExpense);
-            setEditingExpense(null);
-            await fetchDashboardData();
-        } catch (error){
-            console.error("Error updating expense", error);
-        }
+
+
+    const handleLogout = ()=>{
+        localStorage.removeItem("token");
+        window.location.href="/login";
     };
 
     return (
-        <div>
-            <h1>Expense Tracker Dashboard</h1>
+    <div className="dashboard">
 
-            <p>Welcome to your dashboard</p>
+        {/* Header */}
+        <div className="dashboard-header">
+            <div>
+                <h1>Expense Tracker</h1>
+                <p>Welcome to your dashboard 👋</p>
+            </div>
 
-            <h2>Total Expenses: ₹{total}</h2>
+            <button className="logout-btn" onClick={handleLogout}>
+                Logout
+            </button>
+        </div>
+
+        {/* Total Expense Card */}
+        <div className="total-card">
+            <p>Total Expenses</p>
+            <h2>₹{Number(total).toFixed(2)}</h2>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="dashboard-actions">
+
+            <button
+                className="primary-btn"
+                onClick={() => navigate("/add-expense")}
+            >
+                + Add Expense
+            </button>
+
+            <button
+                className="secondary-btn"
+                onClick={() => navigate("/analytics")}
+            >
+                📊 View Analytics
+            </button>
+
+        </div>
+
+        {/* Recent Expenses */}
+        <div className="expenses-section">
 
             <h2>Recent Expenses</h2>
-            {editingExpense && (
-    <form onSubmit={handleUpdate}>
 
-        <h2>Edit Expense</h2>
+            {expenses.length === 0 ? (
+                <p className="no-expenses">
+                    No expenses found.
+                </p>
+            ) : (
+                <div className="expense-list">
 
-        <input
-            type="date"
-            value={editingExpense.date || ""}
-            onChange={(e) =>
-                setEditingExpense({
-                    ...editingExpense,
-                    date: e.target.value
-                })
-            }
-        />
+                    {expenses.map((expense) => (
+                        <div className="expense-card" key={expense.id}>
 
-        <input
-            type="text"
-            value={editingExpense.title || ""}
-            onChange={(e) =>
-                setEditingExpense({
-                    ...editingExpense,
-                    title: e.target.value
-                })
-            }
-            placeholder="Title"
-        />
+                            <div className="expense-info">
+                                <h3>{expense.title}</h3>
 
-        <input
-            type="text"
-            value={editingExpense.description || ""}
-            onChange={(e) =>
-                setEditingExpense({
-                    ...editingExpense,
-                    description: e.target.value
-                })
-            }
-            placeholder="Description"
-        />
+                                <p>
+                                    {expense.category}
+                                </p>
+                            </div>
 
-        <input
-            type="number"
-            value={editingExpense.amount || ""}
-            onChange={(e) =>
-                setEditingExpense({
-                    ...editingExpense,
-                    amount: Number(e.target.value)
-                })
-            }
-            placeholder="Amount"
-        />
+                            <div className="expense-right">
 
-        <input
-            type="text"
-            value={editingExpense.category || ""}
-            onChange={(e) =>
-                setEditingExpense({
-                    ...editingExpense,
-                    category: e.target.value
-                })
-            }
-            placeholder="Category"
-        />
+                                <strong>
+                                    ₹{Number(expense.amount).toFixed(2)}
+                                </strong>
 
-        <button type="submit">
-            Update Expense
-        </button>
+                                <div className="expense-buttons">
 
-        <button
-            type="button"
-            onClick={() => setEditingExpense(null)}
-        >
-            Cancel
-        </button>
+                                    <button
+                                        className="edit-btn"
+                                        onClick={() =>
+                                            handleEdit(expense.id)
+                                        }
+                                    >
+                                        Edit
+                                    </button>
 
-    </form>
-)}
-            {expenses.map((expense) => (
-                <div key={expense.id}>
-                    <span>
-                        {expense.title} - ₹{expense.amount}
-                    </span>
-                    <button onClick={()=> handleEdit(expense.id)}> Edit </button>
-                    <button onClick={()=> handleDelete(expense.id)}> Delete </button>
+                                    <button
+                                        className="delete-btn"
+                                        onClick={() =>
+                                            handleDelete(expense.id)
+                                        }
+                                    >
+                                        Delete
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    ))}
 
                 </div>
-            ))}
+            )}
+
         </div>
-    );
+
+    </div>
+);
 }
 
 export default Dashboard;

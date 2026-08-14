@@ -33,3 +33,8 @@ export const getExpenseSummary = async () => {
     const response = await api.get("/expenses/summary");
     return response.data;
 };
+
+export const getCategorySummary = async () => {
+    const response = await api.get("/expenses/summary/category");
+    return response.data;
+};
