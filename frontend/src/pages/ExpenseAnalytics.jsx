@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { getCategorySummary } from "../services/expenseService";
+import {
+    getCategorySummary,
+    getMonthlySummary
+} from "../services/expenseService";
 
 import {
     PieChart,
@@ -9,6 +12,8 @@ import {
     Legend,
     BarChart,
     Bar,
+    LineChart,
+    Line,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -18,6 +23,7 @@ import {
 function ExpenseAnalytics() {
 
     const [expenses, setExpenses] = useState([]);
+    const [monthlyData, setMonthlyData] = useState([]);
 
     // Colors for different categories
     const COLORS = [
@@ -32,27 +38,33 @@ function ExpenseAnalytics() {
 
     useEffect(() => {
 
-        const fetchCategorySummary = async () => {
+        const fetchAnalyticsData = async () => {
 
             try {
 
-                const data = await getCategorySummary();
+                // Fetch category-wise summary
+                const categoryData = await getCategorySummary();
 
-                setExpenses(data);
+                // Fetch monthly summary
+                const monthlySummary = await getMonthlySummary();
 
-                console.log("Category summary:", data);
+                setExpenses(categoryData);
+                setMonthlyData(monthlySummary);
+
+                console.log("Category summary:", categoryData);
+                console.log("Monthly summary:", monthlySummary);
 
             } catch (error) {
 
                 console.error(
-                    "Error fetching category summary:",
+                    "Error fetching analytics data:",
                     error
                 );
 
             }
         };
 
-        fetchCategorySummary();
+        fetchAnalyticsData();
 
     }, []);
 
@@ -70,6 +82,40 @@ function ExpenseAnalytics() {
         name: expense.category,
         value: Number(expense.total)
     }));
+
+
+    // Prepare monthly chart data
+    const monthlyChartData = monthlyData.map((item) => ({
+        month: item.month,
+        total: Number(item.total)
+    }));
+
+
+    // Convert YYYY-MM into a readable label
+    const formatMonth = (month) => {
+
+        if (!month) {
+            return "";
+        }
+
+        // Example: 2026-08
+        if (/^\d{4}-\d{2}$/.test(month)) {
+
+            const [year, monthNumber] = month.split("-");
+
+            const date = new Date(
+                Number(year),
+                Number(monthNumber) - 1
+            );
+
+            return date.toLocaleString("en-US", {
+                month: "short",
+                year: "numeric"
+            });
+        }
+
+        return month;
+    };
 
 
     return (
@@ -102,7 +148,6 @@ function ExpenseAnalytics() {
             ========================= */}
 
             <div className="analytics-summary">
-
 
                 {/* Total Expenses */}
 
@@ -178,9 +223,8 @@ function ExpenseAnalytics() {
 
                 <>
 
-
                     {/* =========================
-                        CHARTS
+                        CATEGORY CHARTS
                     ========================= */}
 
                     <div className="analytics-charts">
@@ -275,7 +319,7 @@ function ExpenseAnalytics() {
 
 
                         {/* =========================
-                            BAR CHART
+                            CATEGORY BAR CHART
                         ========================= */}
 
                         <div className="chart-card">
@@ -360,6 +404,112 @@ function ExpenseAnalytics() {
                             </div>
 
                         </div>
+
+
+                        {/* =========================
+                            MONTHLY SPENDING CHART
+                        ========================= */}
+
+                        {monthlyChartData.length > 0 && (
+
+                            <div className="chart-card monthly-chart-card">
+
+                                <div className="chart-header">
+
+                                    <div>
+
+                                        <h2>
+                                            Monthly Spending
+                                        </h2>
+
+                                        <p>
+                                            Track how your spending changes over time
+                                        </p>
+
+                                    </div>
+
+                                    <span>
+                                        Monthly Trend
+                                    </span>
+
+                                </div>
+
+
+                                <div className="chart-container">
+
+                                    <ResponsiveContainer
+                                        width="100%"
+                                        height={350}
+                                    >
+
+                                        <LineChart
+                                            data={monthlyChartData}
+
+                                            margin={{
+                                                top: 20,
+                                                right: 30,
+                                                left: 10,
+                                                bottom: 10
+                                            }}
+                                        >
+
+                                            <CartesianGrid
+                                                strokeDasharray="3 3"
+                                                vertical={false}
+                                            />
+
+
+                                            <XAxis
+                                                dataKey="month"
+                                                tickFormatter={formatMonth}
+                                                axisLine={false}
+                                                tickLine={false}
+                                            />
+
+
+                                            <YAxis
+                                                axisLine={false}
+                                                tickLine={false}
+                                            />
+
+
+                                            <Tooltip
+                                                labelFormatter={(label) =>
+                                                    formatMonth(label)
+                                                }
+
+                                                formatter={(value) => [
+                                                    `₹${Number(
+                                                        value
+                                                    ).toFixed(2)}`,
+                                                    "Monthly Expense"
+                                                ]}
+                                            />
+
+
+                                            <Line
+                                                type="monotone"
+                                                dataKey="total"
+                                                name="Monthly Expense"
+                                                stroke="#2563eb"
+                                                strokeWidth={3}
+                                                dot={{
+                                                    r: 5
+                                                }}
+                                                activeDot={{
+                                                    r: 7
+                                                }}
+                                            />
+
+                                        </LineChart>
+
+                                    </ResponsiveContainer>
+
+                                </div>
+
+                            </div>
+
+                        )}
 
                     </div>
 
