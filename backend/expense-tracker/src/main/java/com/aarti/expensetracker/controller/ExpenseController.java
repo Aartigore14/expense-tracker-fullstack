@@ -32,7 +32,10 @@ public class ExpenseController {
     public List<Expense> getAllExpenses() {
         return expenseService.getAllExpenses();
     }
-
+    @GetMapping("/{id}")
+    public Expense getExpenseById(@PathVariable Long id){
+        return expenseService.getExpenseById(id);
+    }
     @PostMapping
     public Expense createExpense(@Valid @RequestBody Expense expense){
         return  expenseService.createExpense(expense);
@@ -40,6 +43,7 @@ public class ExpenseController {
 //    public Expense addExpense(@RequestBody Expense expense){
 //        return expenseService.saveExpense(expense);
 //    }
+
     @PutMapping("/{id}")
     public Expense updateExpense(@PathVariable Long id,@Valid @RequestBody Expense expense){
         return expenseService.updateExpense(id,expense);

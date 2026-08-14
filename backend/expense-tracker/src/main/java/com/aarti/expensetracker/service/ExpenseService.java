@@ -39,8 +39,21 @@ public class ExpenseService {
         expense.setUser(user);
         return expenseRepository.save(expense);
     }
+
+    public Expense getExpenseById(Long id){
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+        return expenseRepository.findByIdAndUser_Email(id, email)
+                .orElseThrow(()-> new ExpenseNotFoundException("Expense with ID "+ id +" not found"));
+    }
     public Expense updateExpense(Long id, Expense expense) {
-        Expense existingExpense = expenseRepository.findById(id)
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+        Expense existingExpense = expenseRepository.findByIdAndUser_Email(id, email)
                 .orElseThrow(() -> new ExpenseNotFoundException("Expense with ID "+ id + " not found"));
 
         existingExpense.setTitle(expense.getTitle());
@@ -93,6 +106,12 @@ public class ExpenseService {
         return expenseRepository.getExpenseSummary(email);
     }
     public void deleteExpense(Long id){
-        expenseRepository.deleteById(id);
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+        Expense existingExpense = expenseRepository.findByIdAndUser_Email(id, email)
+                        .orElseThrow(() -> new ExpenseNotFoundException("Expense with ID " +id + " not found"));
+        expenseRepository.delete(existingExpense);
     }
 }
