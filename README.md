@@ -1,339 +1,319 @@
-# 💰 Expense Tracker — Full Stack Web Application
+# 💰 Expense Tracker — Full Stack Java Application
 
-> A full-stack personal finance management application built with **React + Vite** frontend and **Spring Boot** backend — featuring JWT authentication, expense categorization, analytics dashboard, and interactive charts.
-
-<br/>
-
-![Status](https://img.shields.io/badge/Status-In%20Development-orange?style=for-the-badge)
-![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Backend](https://img.shields.io/badge/Backend-Spring%20Boot%203.x-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
-![Database](https://img.shields.io/badge/Database-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Security](https://img.shields.io/badge/Auth-JWT%20%2B%20Spring%20Security-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
-
-<br/>
+A full-stack personal expense management application built with **Spring Boot** (backend) and **React** (frontend). Users can securely register, log in, and manage their own expenses with real-time analytics — built as part of a Java Full Stack learning journey.
 
 ---
 
-## 📌 About This Project
+## 📖 About the Project
 
-**Expense Tracker** is a full-stack web application designed to help users manage their personal finances effectively. Users can log expenses by category, track income vs. expenditure, view analytics dashboards with charts, and manage everything through a secure, authenticated interface.
+Expense Tracker is a personal finance web app where each user can create an account, log in, and track their day-to-day expenses. Every expense is scoped to the authenticated user via JWT-based security, so users only ever see and manage their own data. The app includes a dashboard for quick expense management and an analytics page with category-wise breakdowns and charts.
 
-This project is built as part of my Java Full Stack learning journey — applying Spring Boot, Spring Security, JWT, React, and MySQL in a real-world application context.
-
----
-
-## ✨ Planned Features
-
-- 🔐 **User Authentication** — Secure registration and login with JWT + Spring Security 6
-- ➕ **Expense Management** — Add, edit, delete, and view all expense records
-- 🗂️ **Category-wise Tracking** — Organize expenses by categories (Food, Travel, Bills, etc.)
-- 📊 **Analytics Dashboard** — Visual breakdown of spending by category and time period
-- 📈 **Income vs Expense Tracking** — Monthly summary with net balance calculation
-- 🔄 **Data Visualization** — Interactive charts using Chart.js / Recharts
-- 📱 **Responsive UI** — Mobile-friendly design that works across all screen sizes
-- 🛡️ **Role-based Access** — Secure endpoints protected by Spring Security filter chain
+This project was built to demonstrate practical, hands-on usage of **Spring Boot, Spring Security, JWT authentication, REST APIs, React, and MySQL** in a real, working full-stack application — not a tutorial clone.
 
 ---
 
-## 🏗️ Architecture
+## ✨ Key Features
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                     CLIENT SIDE                         │
-│         React + Vite  │  Axios  │  React Router         │
-│         Chart.js / Recharts  │  Tailwind CSS            │
-└──────────────────────────┬──────────────────────────────┘
-                           │ HTTP REST API
-                           │ JWT in Authorization header
-┌──────────────────────────▼──────────────────────────────┐
-│                     SERVER SIDE                         │
-│              Spring Boot 3.x (Port 8080)                │
-│                                                         │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐ │
-│  │  Controller │→ │   Service   │→ │   Repository    │ │
-│  │  @RestCtrl  │  │  @Service   │  │  JpaRepository  │ │
-│  └─────────────┘  └─────────────┘  └────────┬────────┘ │
-│                                              │          │
-│  ┌─────────────────────────────────────────┐│          │
-│  │   Spring Security 6 + JWT Filter Chain  ││          │
-│  └─────────────────────────────────────────┘│          │
-└─────────────────────────────────────────────┼──────────┘
-                                              │
-┌─────────────────────────────────────────────▼──────────┐
-│                      DATABASE                           │
-│                    MySQL 8.0                            │
-│         users │ expenses │ categories │ income          │
-└─────────────────────────────────────────────────────────┘
-```
+### 🔐 Authentication
+- User registration and login
+- Password hashing with BCrypt
+- Stateless JWT-based authentication
+- Spring Security filter chain protecting all non-auth endpoints
+- Logout (client-side token removal)
+
+### 💵 Expense Management
+- Add, view, edit, and delete expenses
+- Each expense includes: **title, amount, category, date, description**
+- All expense data is scoped per authenticated user (users can only access their own expenses)
+
+### 📊 Dashboard
+- Total expense summary
+- Recent expenses list
+- Quick actions to add an expense or jump to analytics
+- Inline edit/delete on each expense
+
+### 📈 Analytics
+- Total expenses and total category count
+- Category-wise expense distribution (donut/pie chart)
+- Category comparison (bar chart)
+- Percentage breakdown per category, shown directly on the pie chart
+- Category-wise list view with totals
+
+### 🎨 UI/UX
+- Responsive, card-based layout
+- Dedicated styling for login/register, dashboard, add/edit forms, and analytics
+- Consistent design system (buttons, spacing, colors, typography)
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-| Technology | Purpose |
-|------------|---------|
-| React 18 | UI component framework |
-| Vite | Fast build tool and dev server |
-| React Router v6 | Client-side routing |
-| Axios | HTTP client with JWT interceptors |
-| Chart.js / Recharts | Data visualization and charts |
-| Tailwind CSS | Responsive UI styling |
-
-### Backend
-| Technology | Purpose |
-|------------|---------|
-| Spring Boot 3.x | Backend REST API framework |
-| Spring Security 6 | Authentication and authorization |
-| Spring Data JPA | ORM and database abstraction |
-| JWT (JSON Web Token) | Stateless authentication |
-| Hibernate | ORM implementation |
-| Lombok | Boilerplate code reduction |
-| Maven | Build and dependency management |
-
-### Database
-| Technology | Purpose |
-|------------|---------|
-| MySQL 8.0 | Primary relational database |
-| Flyway | Database schema migration |
+| Layer | Technologies |
+|---|---|
+| **Frontend** | React 19, React Router 7, Axios, Recharts, CSS |
+| **Backend** | Java 17, Spring Boot 3.5, Spring Security, JWT (jjwt), REST APIs, Maven |
+| **Database** | MySQL |
+| **Build Tools** | Vite (frontend), Maven (backend) |
 
 ---
 
-## 📁 Project Structure
+## 🔄 Application Workflow
 
 ```
-expense-tracker/
-│
-├── backend/                          ← Spring Boot Application
-│   └── src/main/java/
-│       └── com/example/expensetracker/
-│           ├── config/
-│           │   ├── SecurityConfig.java
-│           │   └── JwtConfig.java
-│           ├── controller/
-│           │   ├── AuthController.java
-│           │   ├── ExpenseController.java
-│           │   └── CategoryController.java
-│           ├── service/
-│           │   ├── AuthService.java
-│           │   ├── ExpenseService.java
-│           │   └── JwtService.java
-│           ├── repository/
-│           │   ├── UserRepository.java
-│           │   └── ExpenseRepository.java
-│           ├── model/
-│           │   ├── User.java
-│           │   ├── Expense.java
-│           │   └── Category.java
-│           ├── dto/
-│           │   ├── LoginRequest.java
-│           │   ├── RegisterRequest.java
-│           │   └── ExpenseDTO.java
-│           └── security/
-│               ├── JwtAuthFilter.java
-│               └── UserDetailsServiceImpl.java
-│
-├── frontend/                         ← React + Vite Application
-│   └── src/
-│       ├── components/
-│       │   ├── Navbar.jsx
-│       │   ├── ExpenseForm.jsx
-│       │   ├── ExpenseList.jsx
-│       │   └── Charts/
-│       ├── pages/
-│       │   ├── Login.jsx
-│       │   ├── Register.jsx
-│       │   ├── Dashboard.jsx
-│       │   └── Expenses.jsx
-│       ├── services/
-│       │   └── api.js
-│       └── context/
-│           └── AuthContext.jsx
-│
-└── README.md
+Register → Login → JWT Issued → Dashboard
+                                    ├── Add Expense
+                                    ├── View / Edit / Delete Expenses
+                                    ├── Analytics (category charts & totals)
+                                    └── Logout
 ```
 
 ---
 
-## 🔐 Authentication Flow
+## 🏗️ Architecture Overview
 
 ```
-User Registers / Logs In
-        ↓
-POST /api/auth/register or /api/auth/login
-        ↓
-Spring Security validates credentials
-        ↓
-JWT Token generated and returned
-        ↓
-React stores token in memory
-        ↓
-Axios sends token in every request header:
-Authorization: Bearer <token>
-        ↓
-JwtAuthFilter validates token on every protected request
-        ↓
-Access granted / denied based on token validity
+┌─────────────────┐        REST API (JWT Bearer)        ┌──────────────────┐
+│  React Frontend │  ───────────────────────────────▶   │  Spring Boot API │
+│  (Vite, :5173)  │  ◀───────────────────────────────    │     (:8080)      │
+└─────────────────┘                                       └────────┬─────────┘
+                                                                     │
+                                                              Spring Data JPA
+                                                                     │
+                                                              ┌──────▼──────┐
+                                                              │    MySQL    │
+                                                              └─────────────┘
 ```
+
+The backend follows a layered architecture: **Controller → Service → Repository → Entity**, with a JWT authentication filter intercepting requests before they reach protected endpoints.
 
 ---
 
-## 📡 API Endpoints
+## 🖥️ Frontend Structure
 
-### Auth Endpoints
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/auth/register` | Register new user | ❌ |
-| POST | `/api/auth/login` | Login and get JWT token | ❌ |
+```
+frontend/src/
+├── pages/
+│   ├── Login.jsx              # Login form
+│   ├── Register.jsx           # Registration form
+│   ├── Dashboard.jsx          # Expense list, totals, quick actions
+│   ├── AddExpense.jsx         # Add expense form
+│   ├── EditExpense.jsx        # Edit expense form
+│   └── ExpenseAnalytics.jsx   # Charts and category breakdown
+├── context/
+│   └── AuthContext.jsx        # Auth state (JWT token) via React Context
+├── services/
+│   ├── api.js                 # Axios instance, attaches JWT to requests
+│   ├── authService.js         # register/login API calls
+│   └── expenseService.js      # Expense CRUD + summary API calls
+├── ProtectedRoute.jsx          # Route guard for authenticated pages
+└── App.jsx                     # Route definitions
+```
 
-### Expense Endpoints
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| GET | `/api/expenses` | Get all expenses for user | ✅ |
-| GET | `/api/expenses/{id}` | Get expense by ID | ✅ |
-| POST | `/api/expenses` | Add new expense | ✅ |
-| PUT | `/api/expenses/{id}` | Update expense | ✅ |
-| DELETE | `/api/expenses/{id}` | Delete expense | ✅ |
-| GET | `/api/expenses/category/{name}` | Filter by category | ✅ |
-| GET | `/api/expenses/summary` | Monthly summary | ✅ |
+**Routing:**
 
-### Category Endpoints
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| GET | `/api/categories` | Get all categories | ✅ |
-| POST | `/api/categories` | Add custom category | ✅ |
+| Path | Page | Protected |
+|---|---|---|
+| `/login` | Login | No |
+| `/register` | Register | No |
+| `/dashboard` | Dashboard | Yes |
+| `/add-expense` | Add Expense | Yes |
+| `/edit-expense/:id` | Edit Expense | Yes |
+| `/analytics` | Expense Analytics | Yes |
 
 ---
 
-## 🗄️ Database Schema
+## ⚙️ Backend Structure
 
-```sql
--- Users table
-CREATE TABLE users (
-    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name       VARCHAR(100) NOT NULL,
-    email      VARCHAR(100) UNIQUE NOT NULL,
-    password   VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Categories table
-CREATE TABLE categories (
-    id   BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
-);
-
--- Expenses table
-CREATE TABLE expenses (
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id     BIGINT NOT NULL,
-    category_id BIGINT NOT NULL,
-    title       VARCHAR(150) NOT NULL,
-    amount      DECIMAL(10,2) NOT NULL,
-    expense_date DATE NOT NULL,
-    notes       VARCHAR(255),
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (category_id) REFERENCES categories(id)
-);
+```
+backend/expense-tracker/src/main/java/com/aarti/expensetracker/
+├── controller/
+│   ├── AuthController.java      # /api/auth — register, login
+│   ├── ExpenseController.java   # /api/expenses — CRUD + summaries
+│   └── HomeController.java      # / — health check
+├── service/
+│   ├── AuthService.java
+│   ├── ExpenseService.java
+│   └── CustomUserDetailsService.java
+├── repository/
+│   ├── UserRepository.java
+│   └── ExpenseRepository.java
+├── entity/
+│   ├── User.java
+│   └── Expense.java
+├── dto/
+│   ├── LoginRequest.java / RegisterRequest.java
+│   └── CategorySummaryDTO.java / MonthlySummaryDTO.java / ExpenseSummaryDTO.java
+├── config/
+│   ├── SecurityConfig.java
+│   └── JwtAuthenticationFilter.java
+└── util/
+    └── JwtUtil.java
 ```
 
 ---
 
-## ⚙️ Getting Started
+## 🔒 Authentication & Security
+
+- **Registration** (`POST /api/auth/register`) hashes the password with `BCryptPasswordEncoder` and stores a new `User`.
+- **Login** (`POST /api/auth/login`) authenticates credentials via Spring Security's `AuthenticationManager` and returns a signed JWT.
+- The JWT is signed using HMAC (`jjwt` library) and includes the user's email as the subject, with a 24-hour expiration.
+- A custom `JwtAuthenticationFilter` runs on every request (except `/api/auth/**`), extracts the token from the `Authorization: Bearer <token>` header, validates it, and sets the authenticated user in the Spring Security context.
+- All `/api/expenses/**` endpoints require a valid JWT — there is no role-based access control; every authenticated user has the same permissions over their own data.
+- Expenses are always scoped to the logged-in user's email at the service/repository layer, so one user cannot view or modify another user's expenses.
+- CORS is configured to allow requests from `http://localhost:5173` (the Vite dev server).
+
+---
+
+## 📊 Analytics
+
+The analytics page (`/analytics`) is powered by category-level aggregation from the backend:
+
+- **Pie/Donut chart** — expense distribution by category, with percentage labels
+- **Bar chart** — total spend per category, for side-by-side comparison
+- **Summary cards** — total expenses and number of distinct categories
+- **Category list** — each category with its running total
+
+> Note: the backend also exposes a monthly summary endpoint (`/api/expenses/summary/monthly`), but the current frontend analytics page does not yet render it — it's available for future use.
+
+---
+
+## 🗄️ Database
+
+**MySQL**, managed via Spring Data JPA (`ddl-auto=update`).
+
+**`users` table**
+| Column | Type | Notes |
+|---|---|---|
+| id | BIGINT | Primary key, auto-generated |
+| name | VARCHAR | Not blank |
+| email | VARCHAR | Unique, not null |
+| password | VARCHAR | BCrypt-hashed, never returned in API responses |
+
+**`expenses` table**
+| Column | Type | Notes |
+|---|---|---|
+| id | BIGINT | Primary key, auto-generated |
+| title | VARCHAR | Required |
+| amount | DOUBLE | Required, must be positive |
+| category | VARCHAR | Required |
+| date | DATE | Required |
+| description | VARCHAR | Optional |
+| user_id | BIGINT (FK) | Many-to-one relationship to `users` |
+
+---
+
+## 🔌 API Endpoints
+
+### Auth — `/api/auth` (public)
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/auth/register` | Register a new user |
+| POST | `/api/auth/login` | Authenticate and receive a JWT |
+
+### Expenses — `/api/expenses` (JWT required)
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/expenses` | Get all expenses for the logged-in user |
+| GET | `/api/expenses/{id}` | Get a single expense by ID |
+| POST | `/api/expenses` | Create a new expense |
+| PUT | `/api/expenses/{id}` | Update an existing expense |
+| DELETE | `/api/expenses/{id}` | Delete an expense |
+| GET | `/api/expenses/category/{category}` | Get expenses filtered by category |
+| GET | `/api/expenses/total` | Get total expense amount |
+| GET | `/api/expenses/summary` | Get total expenses + transaction count |
+| GET | `/api/expenses/summary/category` | Get category-wise totals |
+| GET | `/api/expenses/summary/monthly` | Get month-wise totals *(backend-ready, not yet used in UI)* |
+
+All `/api/expenses/**` requests must include:
+```
+Authorization: Bearer <jwt_token>
+```
+
+---
+
+## 🖼️ Screenshots
+
+> Add your own screenshots to a `screenshots/` folder and update the paths below.
+
+![Login Page](screenshots/login.png)
+![Register Page](screenshots/register.png)
+![Dashboard](screenshots/dashboard.png)
+![Add Expense](screenshots/add-expense.png)
+![Analytics](screenshots/analytics.png)
+
+---
+
+## 🚀 Installation & Setup
 
 ### Prerequisites
-- Java 21 LTS
-- Node.js 22 LTS + npm
-- MySQL 8.0
-- Maven 3.9+
-- IntelliJ IDEA (backend) + VS Code (frontend)
+- Java 17
+- Node.js and npm
+- MySQL Server
+- Maven (or use the included `mvnw` wrapper)
 
-### Backend Setup
+### 1. MySQL Database Setup
+```sql
+CREATE DATABASE expense_tracker;
+```
 
+### 2. Backend Setup
 ```bash
-# 1. Clone the repository
-git clone https://github.com/Aartigore14/expense-tracker.git
+cd backend/expense-tracker
 
-# 2. Navigate to backend folder
-cd expense-tracker/backend
+# Configure src/main/resources/application.properties (see below)
 
-# 3. Configure MySQL in application.properties
-spring.datasource.url=jdbc:mysql://localhost:3306/expensedb
-spring.datasource.username=root
-spring.datasource.password=your_password
+./mvnw spring-boot:run
+```
+The backend runs on `http://localhost:8080`.
+
+### 3. Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+```
+The frontend runs on `http://localhost:5173`.
+
+---
+
+## ⚙️ Environment & Configuration
+
+**Backend** — `backend/expense-tracker/src/main/resources/application.properties`
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/expense_tracker
+spring.datasource.username=<your-mysql-username>
+spring.datasource.password=<your-mysql-password>
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
-
-# 4. Create the database in MySQL
-mysql -u root -p
-CREATE DATABASE expensedb;
-
-# 5. Run the Spring Boot application
-mvn spring-boot:run
-
-# Backend runs on http://localhost:8080
 ```
 
-### Frontend Setup
+> ⚠️ Do not commit real database credentials. Use environment variables or a local `application-local.properties` (git-ignored) for real secrets.
 
-```bash
-# 1. Navigate to frontend folder
-cd expense-tracker/frontend
+**JWT signing key** is currently defined directly in `util/JwtUtil.java`. For any deployment beyond local development, move this to an environment variable / externalized config rather than hardcoding it in source.
 
-# 2. Install dependencies
-npm install
-
-# 3. Start development server
-npm run dev
-
-# Frontend runs on http://localhost:5173
+**Frontend API base URL** — `frontend/src/services/api.js`
+```js
+baseURL: "http://localhost:8080/api"
 ```
+Update this if your backend runs on a different host/port.
+
+**CORS** — configured in `SecurityConfig.java` to allow only `http://localhost:5173`. Update the allowed origin if you deploy the frontend elsewhere.
 
 ---
 
-## 🚧 Development Progress
+## 🔮 Future Enhancements
 
-| Feature | Status |
-|---------|--------|
-| Spring Boot project setup | ✅ Complete |
-| MySQL database connection | ✅ Complete |
-| User Registration and Login API | ✅ Complete |
-| JWT token generation and validation | ✅ Complete |
-| Spring Security 6 filter chain | ✅ Complete |
-| Expense CRUD REST API | ✅ Complete |
-| Category management | 🔄 In Progress |
-| React + Vite project setup | ✅ Complete |
-| Login and Register UI | ✅ Complete |
-| Dashboard with charts | 🔜 Upcoming |
-| Income vs Expense tracking | 🔜 Upcoming |
-| Responsive UI (mobile-friendly) | 🔜 Upcoming |
-| Deployment (Railway + Vercel) | 🔜 Upcoming |
+- [ ] Income vs. expense tracking
+- [ ] Role-based access control (e.g., Admin/User)
+- [ ] Date-range and monthly analytics in the UI (backend endpoint already exists)
+- [ ] Budget management and limits per category
+- [ ] Spending alerts/notifications
 
 ---
 
-## 🔗 Related Repositories
+## 🎯 Learning Objective
 
-| Repo | Description |
-|------|-------------|
-| [java-mini-projects](https://github.com/Aartigore14/java-mini-projects) | Core Java projects — OOP, Collections, JDBC |
-| [spring-boot-practice](https://github.com/Aartigore14/spring-boot-practice) | Spring Boot learning — REST APIs, JPA, Security |
-| [smart-parking-system](https://github.com/Aartigore14/smart-parking-system) | Frontend project — HTML, CSS, JavaScript |
+This project was built as part of my Java Full Stack learning journey to practice and demonstrate real-world usage of **Spring Boot, Spring Security, JWT authentication, REST API design, React, and MySQL** together in a single, working application.
 
----
-
-## 👩‍💻 Author
-
-**Aarti Gore**
-- 🎓 B.E. E&TC Student — SPPU, Pune (Batch 2027)
-- 💼 [LinkedIn](https://linkedin.com/in/gore-aarti)
-- 🐙 [GitHub](https://github.com/Aartigore14)
-- 💻 [LeetCode](https://leetcode.com/aartigore)
-- 📧 aartigore2005@gmail.com
-
----
-
-<p align="center">
-  <i>Built with ☕ Java and ⚛️ React — one feature at a time.</i><br/>
-  ⭐ Star this repo if you find it useful!
-</p>
