@@ -145,11 +145,11 @@ flowchart TD
 
 | Login | Dashboard |
 |---|---|
-| <img src="./assets/login.jpeg" width="400"/> | <img src="./assets/dashboard.jpeg" width="400"/> |
+| <img src="./frontend/src/assets/login.jpeg" width="400"/> | <img src="./frontend/src/assets/dashboard.jpeg" width="400"/> |
 
 | Add Expense | Analytics |
 |---|---|
-| <img src="./assets/add-expense.jpeg" width="400"/> | <img src="./assets/analytics.jpeg" width="400"/> |
+| <img src="./frontend/src/assets/add-expense.jpeg" width="400"/> | <img src="./frontend/src/assets/analytics.jpeg" width="400"/> |
 
 </div>
 
