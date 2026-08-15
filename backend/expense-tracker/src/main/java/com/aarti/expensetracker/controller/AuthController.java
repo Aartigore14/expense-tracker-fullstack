@@ -3,7 +3,6 @@ package com.aarti.expensetracker.controller;
 import com.aarti.expensetracker.dto.RegisterRequest;
 import com.aarti.expensetracker.service.AuthService;
 import com.aarti.expensetracker.dto.LoginRequest;
-import jakarta.persistence.PostRemove;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
