@@ -65,7 +65,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                List.of("http://localhost:5173","remarkable-peace-production.up.railway.app")
+                List.of("http://localhost:5173","http://remarkable-peace-production.up.railway.app")
         );
 
         configuration.setAllowedMethods(
