@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../services/api";
 
 function EditExpense() {
 
@@ -23,7 +24,7 @@ function EditExpense() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `http://localhost:8080/api/expenses/${id}`,
+                `https://expense-tracker-fullstack-production-8ccd.up.railway.app/api/expenses/${id}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -65,7 +66,7 @@ function EditExpense() {
             const token = localStorage.getItem("token");
 
             const response = await fetch(
-                `http://localhost:8080/api/expenses/${id}`,
+                `https://expense-tracker-fullstack-production-8ccd.up.railway.app/api/expenses/${id}`,
                 {
                     method: "PUT",
                     headers: {

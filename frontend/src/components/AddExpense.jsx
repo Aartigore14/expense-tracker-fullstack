@@ -23,7 +23,7 @@ function AddExpense() {
         try {
             const token = localStorage.getItem("token");
 
-            const response = await fetch("http://localhost:8080/api/expenses", {
+            const response = await fetch("https://expense-tracker-fullstack-production-8ccd.up.railway.app/api/expenses", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
