@@ -13,15 +13,20 @@ function App() {
     <BrowserRouter>
       <Routes>
 
+        {/*Home -> Register */}
+        <Route path="/"
+        element={<Register/>} />
+
+
+        {/* Register */}
+        <Route path="/register"
+        element={<Register/>} />
+
         {/* Login */}
         <Route
           path="/login"
           element={ <Login/> }
         />
-
-        {/* Register */}
-        <Route path="/register"
-        element={<Register/>} />
 
         {/* Protected Dashboard */}
         <Route
